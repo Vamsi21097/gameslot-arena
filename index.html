@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GameSlot Arena — Tournament Listings</title>
+<meta name="description" content="Browse live gaming tournaments, check entry fee and open slots, and register in seconds." />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <div class="brand">
+        <span class="brand-mark">🎮</span>
+        <div>
+          <h1 id="site-name">GameSlot Arena</h1>
+          <p id="site-tagline" class="tagline">Find matches. Check the slot. Lock your entry.</p>
+        </div>
+      </div>
+      <a class="btn btn-ghost" id="support-link" href="mailto:youremail@example.com">Contact organizer</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="toolbar">
+      <input id="search-input" type="search" placeholder="Search by game or tournament name..." aria-label="Search tournaments" />
+      <select id="game-filter" aria-label="Filter by game">
+        <option value="all">All games</option>
+      </select>
+    </section>
+
+    <section id="tournament-grid" class="grid" aria-live="polite"></section>
+
+    <p id="empty-state" class="empty-state" hidden>No tournaments match your search right now. Check back soon!</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Want your tournament listed here? Message the organizer and get your slots posted.</p>
+    </div>
+  </footer>
+
+  <!-- Registration Modal -->
+  <div id="register-modal" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <h2 id="modal-title">Register</h2>
+      <p id="modal-subtitle" class="modal-subtitle"></p>
+      <form id="register-form">
+        <label>
+          In-game name (IGN)
+          <input type="text" id="field-ign" required placeholder="e.g. ShadowSniper99" />
+        </label>
+        <label>
+          Your WhatsApp / contact number
+          <input type="tel" id="field-phone" required placeholder="e.g. 9876543210" />
+        </label>
+        <label>
+          Team name <span class="optional">(optional, for squad/duo)</span>
+          <input type="text" id="field-team" placeholder="e.g. Night Wolves" />
+        </label>
+        <button type="submit" class="btn btn-primary btn-block">Continue on WhatsApp</button>
+        <p class="modal-hint">We'll open WhatsApp with your details pre-filled — just hit send to confirm your slot.</p>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

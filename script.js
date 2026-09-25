@@ -1,0 +1,160 @@
+let siteConfig = {};
+let tournaments = [];
+let activeTournament = null;
+
+const gridEl = document.getElementById("tournament-grid");
+const emptyStateEl = document.getElementById("empty-state");
+const searchInput = document.getElementById("search-input");
+const gameFilter = document.getElementById("game-filter");
+const modal = document.getElementById("register-modal");
+const modalSubtitle = document.getElementById("modal-subtitle");
+const registerForm = document.getElementById("register-form");
+
+function slotsStatus(t) {
+  const remaining = t.slotsTotal - t.slotsFilled;
+  if (remaining <= 0) return "full";
+  if (remaining / t.slotsTotal <= 0.2) return "almost";
+  return "open";
+}
+
+function formatDateTime(t) {
+  const d = new Date(`${t.date}T${t.time}:00`);
+  const dateStr = d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
+  return `${dateStr}, ${t.time} ${t.timezone || ""}`.trim();
+}
+
+function renderCard(t) {
+  const status = slotsStatus(t);
+  const remaining = Math.max(t.slotsTotal - t.slotsFilled, 0);
+  const pct = Math.min((t.slotsFilled / t.slotsTotal) * 100, 100);
+  const statusLabel = status === "full" ? "FULL" : status === "almost" ? "FILLING FAST" : "OPEN";
+
+  const card = document.createElement("article");
+  card.className = "card";
+  card.innerHTML = `
+    <div class="card-top">
+      <span class="game-badge">${t.game}</span>
+      <span class="status-badge status-${status}">${statusLabel}</span>
+    </div>
+    <h3>${t.title}</h3>
+    <div class="card-meta">
+      <div>🗓 <strong>${formatDateTime(t)}</strong></div>
+      <div>🎯 <strong>${t.mode}</strong></div>
+      <div>🗺 <strong>${t.map || "TBA"}</strong></div>
+      <div>🏆 <strong>${t.currency}${t.prizePool}</strong> prize pool</div>
+    </div>
+    <div class="slots-row">
+      <span>${t.slotsFilled}/${t.slotsTotal} slots filled</span>
+      <span>${remaining} left</span>
+    </div>
+    <div class="slots-bar-track">
+      <div class="slots-bar-fill ${status === "full" ? "full" : ""}" style="width:${pct}%"></div>
+    </div>
+    ${t.notes ? `<p class="notes">${t.notes}</p>` : ""}
+    <div class="card-footer">
+      <div class="fee"><span class="fee-label">Entry fee</span>${t.currency}${t.entryFee}</div>
+      <button class="btn btn-primary register-btn" ${status === "full" ? "" : ""}>
+        ${status === "full" ? "Join waitlist" : "Register"}
+      </button>
+    </div>
+  `;
+  card.querySelector(".register-btn").addEventListener("click", () => openModal(t));
+  return card;
+}
+
+function applyFilters() {
+  const query = searchInput.value.trim().toLowerCase();
+  const game = gameFilter.value;
+  const filtered = tournaments.filter((t) => {
+    const matchesQuery = !query || t.title.toLowerCase().includes(query) || t.game.toLowerCase().includes(query);
+    const matchesGame = game === "all" || t.game === game;
+    return matchesQuery && matchesGame;
+  });
+
+  gridEl.innerHTML = "";
+  filtered.forEach((t) => gridEl.appendChild(renderCard(t)));
+  emptyStateEl.hidden = filtered.length !== 0;
+}
+
+function populateGameFilter() {
+  const games = [...new Set(tournaments.map((t) => t.game))];
+  games.forEach((g) => {
+    const opt = document.createElement("option");
+    opt.value = g;
+    opt.textContent = g;
+    gameFilter.appendChild(opt);
+  });
+}
+
+function openModal(t) {
+  activeTournament = t;
+  modalSubtitle.textContent = `${t.game} — ${t.title} · ${formatDateTime(t)} · Entry ${t.currency}${t.entryFee}`;
+  modal.hidden = false;
+  registerForm.reset();
+}
+
+function closeModal() {
+  modal.hidden = true;
+  activeTournament = null;
+}
+
+document.getElementById("modal-close").addEventListener("click", closeModal);
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeModal();
+});
+
+registerForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (!activeTournament) return;
+
+  const ign = document.getElementById("field-ign").value.trim();
+  const phone = document.getElementById("field-phone").value.trim();
+  const team = document.getElementById("field-team").value.trim();
+
+  const t = activeTournament;
+  const lines = [
+    `Hi, I'd like to register for "${t.title}" (${t.game}).`,
+    `IGN: ${ign}`,
+    `My contact: ${phone}`,
+    team ? `Team: ${team}` : null,
+    `Match: ${formatDateTime(t)}`,
+    `Entry fee: ${t.currency}${t.entryFee}`,
+  ].filter(Boolean);
+
+  const message = encodeURIComponent(lines.join("\n"));
+  const organizerNumber = (t.organizerWhatsapp || siteConfig.organizerWhatsapp || "").replace(/\D/g, "");
+  const waLink = `https://wa.me/${organizerNumber}?text=${message}`;
+
+  window.open(waLink, "_blank", "noopener");
+  closeModal();
+});
+
+searchInput.addEventListener("input", applyFilters);
+gameFilter.addEventListener("change", applyFilters);
+
+fetch("data.json")
+  .then((res) => res.json())
+  .then((data) => {
+    siteConfig = data.siteConfig || {};
+    tournaments = data.tournaments || [];
+
+    if (siteConfig.siteName) {
+      document.getElementById("site-name").textContent = siteConfig.siteName;
+      document.title = `${siteConfig.siteName} — Tournament Listings`;
+    }
+    if (siteConfig.tagline) {
+      document.getElementById("site-tagline").textContent = siteConfig.tagline;
+    }
+    if (siteConfig.supportEmail) {
+      const link = document.getElementById("support-link");
+      link.href = `mailto:${siteConfig.supportEmail}`;
+    }
+
+    populateGameFilter();
+    applyFilters();
+  })
+  .catch((err) => {
+    emptyStateEl.hidden = false;
+    emptyStateEl.textContent = "Couldn't load tournaments right now. Please refresh.";
+    console.error(err);
+  });
