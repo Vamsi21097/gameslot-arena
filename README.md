@@ -1,6 +1,8 @@
-# GameSlot Arena
+# PUBG ARENA
 
-A simple, no-backend website for posting gaming tournament ads (PUBG, Free Fire, COD Mobile, etc.) with match time, entry fee, and open slots — and letting players register in one click.
+A simple, no-backend website for posting PUBG Mobile custom-room tournament ads — map, mode, match time, entry fee, prize pool and open slots — and letting players register in one click.
+
+Map art is original CSS/SVG (gradients + contour-line patterns per map), not official PUBG assets, to avoid any trademark/copyright issues.
 
 ## How it works
 
@@ -18,10 +20,10 @@ A simple, no-backend website for posting gaming tournament ads (PUBG, Free Fire,
 ```json
 {
   "id": "unique-id",
-  "game": "PUBG Mobile",
   "title": "Friday Night Squad Showdown",
-  "mode": "Squad (4v4)",
   "map": "Erangel",
+  "mode": "Squad (4v4)",
+  "perspective": "TPP",
   "date": "2026-09-27",
   "time": "20:00",
   "timezone": "IST",
@@ -35,7 +37,9 @@ A simple, no-backend website for posting gaming tournament ads (PUBG, Free Fire,
 }
 ```
 
-`organizerWhatsapp` on a tournament is optional — it overrides the site-wide number for that specific event (handy if different admins run different games).
+`map` drives the card's color theme — supported out of the box: `Erangel`, `Miramar`, `Sanhok`, `Vikendi`, `Livik` (each has its own gradient in `styles.css` under `.map-<name>`; add a new one there if you run a tournament on another map).
+
+`organizerWhatsapp` on a tournament is optional — it overrides the site-wide number for that specific event (handy if different admins run different tournaments).
 
 3. Update `slotsFilled` as people register, so the site always shows accurate availability.
 

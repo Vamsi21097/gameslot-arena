@@ -1,17 +1,17 @@
 {
   "siteConfig": {
-    "siteName": "GameSlot Arena",
-    "tagline": "Find matches. Check the slot. Lock your entry.",
+    "siteName": "PUBG ARENA",
+    "tagline": "Drop in. Check the slot. Claim your spot in the zone.",
     "organizerWhatsapp": "910000000000",
     "supportEmail": "youremail@example.com"
   },
   "tournaments": [
     {
       "id": "t1",
-      "game": "PUBG Mobile",
+      "map": "Erangel",
       "title": "Friday Night Squad Showdown",
       "mode": "Squad (4v4)",
-      "map": "Erangel",
+      "perspective": "TPP",
       "date": "2026-09-27",
       "time": "20:00",
       "timezone": "IST",
@@ -24,10 +24,10 @@
     },
     {
       "id": "t2",
-      "game": "PUBG Mobile",
+      "map": "Miramar",
       "title": "Solo Survivor Cup",
       "mode": "Solo",
-      "map": "Miramar",
+      "perspective": "FPP",
       "date": "2026-09-28",
       "time": "18:30",
       "timezone": "IST",
@@ -40,10 +40,10 @@
     },
     {
       "id": "t3",
-      "game": "Free Fire",
-      "title": "Booyah League - Duo Night",
+      "map": "Sanhok",
+      "title": "Jungle Rush Duo League",
       "mode": "Duo",
-      "map": "Bermuda",
+      "perspective": "TPP",
       "date": "2026-09-29",
       "time": "21:00",
       "timezone": "IST",
@@ -56,19 +56,51 @@
     },
     {
       "id": "t4",
-      "game": "Call of Duty Mobile",
-      "title": "Weekend Warzone Clash",
-      "mode": "Squad (5v5)",
-      "map": "Nuketown",
+      "map": "Vikendi",
+      "title": "Snowstorm Squad Clash",
+      "mode": "Squad (4v4)",
+      "perspective": "TPP",
       "date": "2026-10-03",
       "time": "19:00",
+      "timezone": "IST",
+      "entryFee": 40,
+      "currency": "₹",
+      "prizePool": 1600,
+      "slotsTotal": 25,
+      "slotsFilled": 9,
+      "notes": "Full squad required, one substitute allowed."
+    },
+    {
+      "id": "t5",
+      "map": "Livik",
+      "title": "Quick Drop Blitz",
+      "mode": "Solo",
+      "perspective": "FPP",
+      "date": "2026-09-26",
+      "time": "17:00",
+      "timezone": "IST",
+      "entryFee": 15,
+      "currency": "₹",
+      "prizePool": 500,
+      "slotsTotal": 52,
+      "slotsFilled": 22,
+      "notes": "Fast-paced small map, matches finish in under 15 minutes."
+    },
+    {
+      "id": "t6",
+      "map": "Erangel",
+      "title": "Weekend Warzone Finals",
+      "mode": "Squad (4v4)",
+      "perspective": "TPP",
+      "date": "2026-10-04",
+      "time": "20:30",
       "timezone": "IST",
       "entryFee": 100,
       "currency": "₹",
       "prizePool": 4000,
-      "slotsTotal": 16,
-      "slotsFilled": 6,
-      "notes": "Bring your full 5-man squad, substitutes allowed once."
+      "slotsTotal": 25,
+      "slotsFilled": 25,
+      "notes": "Top 3 squads qualify for the monthly championship."
     }
   ]
 }

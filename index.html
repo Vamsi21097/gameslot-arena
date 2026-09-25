@@ -3,29 +3,73 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GameSlot Arena — Tournament Listings</title>
-<meta name="description" content="Browse live gaming tournaments, check entry fee and open slots, and register in seconds." />
+<title>PUBG ARENA — Live Tournament Slots</title>
+<meta name="description" content="Browse live PUBG Mobile tournaments, check entry fee, prize pool and open slots, and register in seconds." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
   <header class="site-header">
     <div class="container header-row">
       <div class="brand">
-        <span class="brand-mark">🎮</span>
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="34" height="34">
+            <polygon points="24,2 44,14 44,34 24,46 4,34 4,14" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M24 12 L34 18 V30 L24 36 L14 30 V18 Z" fill="currentColor" opacity="0.18"/>
+            <path d="M24 12 V36 M14 18 L34 30 M34 18 L14 30" stroke="currentColor" stroke-width="1.4" opacity="0.7"/>
+          </svg>
+        </span>
         <div>
-          <h1 id="site-name">GameSlot Arena</h1>
-          <p id="site-tagline" class="tagline">Find matches. Check the slot. Lock your entry.</p>
+          <h1 id="site-name">PUBG ARENA</h1>
+          <p id="site-tagline" class="tagline">Drop in. Check the slot. Claim your spot in the zone.</p>
         </div>
       </div>
       <a class="btn btn-ghost" id="support-link" href="mailto:youremail@example.com">Contact organizer</a>
     </div>
   </header>
 
+  <section class="hero">
+    <div class="hero-zone" aria-hidden="true">
+      <span class="ring ring-1"></span>
+      <span class="ring ring-2"></span>
+      <span class="ring ring-3"></span>
+      <span class="chute">🪂</span>
+    </div>
+    <div class="container hero-content">
+      <p class="eyebrow">PUBG MOBILE · CUSTOM ROOM TOURNAMENTS</p>
+      <h2>Every match. Every map.<br />One place to drop in.</h2>
+      <div class="hero-stats" id="hero-stats">
+        <div class="stat">
+          <strong id="stat-live">0</strong>
+          <span>Open matches</span>
+        </div>
+        <div class="stat">
+          <strong id="stat-prize">₹0</strong>
+          <span>Prize pool this week</span>
+        </div>
+        <div class="stat">
+          <strong id="stat-slots">0</strong>
+          <span>Slots left across all matches</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <main class="container">
     <section class="toolbar">
-      <input id="search-input" type="search" placeholder="Search by game or tournament name..." aria-label="Search tournaments" />
-      <select id="game-filter" aria-label="Filter by game">
-        <option value="all">All games</option>
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="search-input" type="search" placeholder="Search tournaments..." aria-label="Search tournaments" />
+      </div>
+      <select id="map-filter" aria-label="Filter by map">
+        <option value="all">All maps</option>
+      </select>
+      <select id="mode-filter" aria-label="Filter by mode">
+        <option value="all">All modes</option>
       </select>
     </section>
 
@@ -36,7 +80,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>Want your tournament listed here? Message the organizer and get your slots posted.</p>
+      <p>Want your PUBG tournament listed here? Message the organizer and get your slots posted.</p>
     </div>
   </footer>
 
